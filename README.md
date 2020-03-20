@@ -1,4 +1,4 @@
-> NOTICE! This repository is under maintain. 
+> NOTICE! This repository is under development. 
 
 # Containerized GRR Rapid Response
 
