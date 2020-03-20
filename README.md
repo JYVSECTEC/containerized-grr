@@ -4,14 +4,14 @@
 
 ## GRR Rapid Response
 
-[GRR Rapid Response](https://github.com/google/grr), later GRR, is an open source incident response framework written in Python 2.7 (Python 3.6 version was published on December 2019). The development work of GRR was started in 2011 by Google, with an aim to create a state of the art tool that meets the requirements set for a cross-platform and scalable incident response framework. Since 2011 GRR has been continuously maintained by Google's software engineers and other contributors, currently being at the version 3.3.0.8 (released on 9 October 2019).
+[GRR Rapid Response](https://github.com/google/grr), later GRR, is an open source incident response framework written in Python 2.7 (Python 3.6 version was published in December 2019). The development work of GRR was started in 2011 by Google, with an aim to create a state of the art tool that meets the requirements set for a cross-platform and scalable incident response framework. Since 2011 GRR has been continuously maintained by Google's software engineers and other contributors, currently being at the version 3.3.0.8 (released on 9 October 2019).
 
 ## Motivation behind containerized GRR
 
 GRR project offers an [official Docker image](https://hub.docker.com/r/grrdocker/grr/) which can be used to run all the GRR server components, HTTP frontend, worker and web-based user interface within a single Docker container. Additionally, image includes bundled MySQL for a data storing.
 However, the GRR developer team notices on their [documentation](https://grr-doc.readthedocs.io/en/v3.3.0/) that using official image is ideal only when the tool is tested or used for evaluation purposes.
 
-Initially, the idea was to distribute the official image in a way that every component of the tool can be executed in their own Docker container. Prediction was that the distribution of components should offer a better scalability than the official image allowing usage of the contained GRR also in a large organizational networks and ability to perform incident response more intensively. It is advisable to notice that the GRR can already be used, distributed and scaled by compiling it directly from a source code or installing it from a software packages. However, in my experience the Docker images are well more approachable way to take use of a tool since Docker tackles all the operating system compatibility and dependency problems that might occur when the traditional installing methods are used. In addition, the scaling process can easily find out to be more complex than utilizing container orchestration tools such Kubernetes.
+Initially, the idea was to distribute the official image in a way that every component of the tool can be executed in their own Docker container. Assumption was that the distribution of components should offer a better scalability than the official image allowing usage of the contained GRR also in a large organizational networks and ability to perform incident response more intensively. It is advisable to notice that GRR can already be used, distributed and scaled by compiling it directly from a source code or installing it from a software packages. However, in my experience the Docker images are a more approachable way to take use of a tool since Docker tackles all the operating system compatibility and dependency problems that might occur when the traditional installing methods are used. In addition, the scaling process can easily find out to be more complex than utilizing container orchestration tools such Kubernetes.
 
 ## The starting point
 
@@ -23,7 +23,7 @@ Although the repository seemed promising for a direct deployment there were feat
 
 ### Forewords
 
-This repository is built to contain all the necessary configuration files that are needed to deploy containerized GRR successfully. Please, leave an issue if you encounter any problems during or after deployment.
+This repository contains all the necessary configuration files that are needed to deploy containerized GRR successfully. Please, leave an issue if you encounter any problems during or after deployment.
 
 ### Prerequisites
 
@@ -81,7 +81,7 @@ installation on clients](#GRR-agent-installation-on-clients) section for additio
 
 ### GRR agent installation on clients
 
-After GRR Server is successfully deployed, client installers can be examined. GRR
+After GRR server is successfully deployed, client installers can be examined. GRR
 Server populates `./containerized-grr/installers` directory with installer packages for
 both 32-bit and 64-bit operating systems:  
   * dbg_GRR_x.x.x.x_amd64.exe  
