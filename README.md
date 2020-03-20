@@ -118,8 +118,8 @@ sudo installer -pkg grr_x.x.x.x_amd64.pkg -target /
 #### Authentication
 
 In future containerized GRR will support various authentication methods, but currently there are two tested methods available (defaults to Remote Authentication):  
-    • Basic Authentication – Username and password are generated during setup process of GRR server and stored on the database  
-    • Remote Authentication – GRR server trusts authentication that the Nginx reverse proxy handles.  
+  * Basic Authentication – Username and password are generated during setup process of GRR server and stored on the database  
+  * Remote Authentication – GRR server trusts authentication that the Nginx reverse proxy handles.  
 
 #### Database
 
