@@ -1,5 +1,7 @@
 > NOTICE! This repository is under development. 
 
+![CI](https://github.com/JYVSECTEC/containerized-grr/workflows/CI/badge.svg?branch=master)
+
 # Containerized GRR Rapid Response
 
 ## GRR Rapid Response
