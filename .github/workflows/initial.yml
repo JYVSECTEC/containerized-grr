@@ -25,3 +25,9 @@ jobs:
     # Runs a single command using the runners shell
     - name: List files
       run: ls -all
+
+    - name: Copy files
+      run: |
+        cd scripts
+        bash update.sh
+        ls -all ../admin ../front ../worker
