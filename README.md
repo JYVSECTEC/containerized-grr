@@ -157,8 +157,8 @@ is advisable to keep binaries on their default installation location. Osquery is
 # Author
 
 Author: JYVSECTEC/Joni Ahonen  
-Twitter: @JYVSECTEC, @ahoneen  
-More information: jyvsectec.fi  
+Twitter: [@JYVSECTEC](https://twitter.com/JYVSECTEC), [@ahoneen](https://twitter.com/ahoneen)  
+More information: [jyvsectec.fi](https://jyvsectec.fi)
 
 # License
 
