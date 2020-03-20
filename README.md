@@ -164,7 +164,7 @@ This source code is licenced under the Apache Version 2.0 license.
 
 # References
 
-https://grr-doc.readthedocs.io/en/v3.3.0/
-https://github.com/google/grr/tree/v3.3.0.8
-https://labs.spotify.com/2019/04/04/whacking-a-million-moles-automated-incident-response-infrastructure-in-gcp/
+https://grr-doc.readthedocs.io/en/v3.3.0/  
+https://github.com/google/grr/tree/v3.3.0.8  
+https://labs.spotify.com/2019/04/04/whacking-a-million-moles-automated-incident-response-infrastructure-in-gcp/  
 https://github.com/spotify/terraform-google-grr
