@@ -25,7 +25,7 @@ Database.enabled: True
 # Monitoring
 
 Monitoring.alert_email: "%(MONITORING_ALERT_EMAIL|env)"
-Monitoring.emergency_access_email: "%(MONITORING_EMERGENCY_EMAIL)"
+Monitoring.emergency_access_email: "%(MONITORING_EMERGENCY_EMAIL|env)"
 Monitoring.http_port: "%(MONITORING_HTTP_PORT|env)"
 
 # Certificate and key management
