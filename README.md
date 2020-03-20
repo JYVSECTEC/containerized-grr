@@ -65,7 +65,7 @@ docker network create --driver=bridge --subnet=<SUBNETWORK> static
 docker-compose up --build --detach  
 ```
 
-If no errors occur command “docker-compose ps” should inform that there are now
+If no errors occur command `docker-compose ps` should inform that there are now
 six containers up and running:  
   * grr-admin  
   * grr-front  
@@ -76,13 +76,13 @@ six containers up and running:
 
 Now you can access the administrator GUI by browsing by Nginx IP address or URL
 and use the credentials provided during deployment process (default: admin/grr).
-However, you must install GRR agents on those clients that you want to examine before you can really execute any forensic tasks on endpoints. Consult the "GRR agent
-installation on clients" section for additional information.
+However, you must install GRR agents on those clients that you want to examine before you can really execute any forensic tasks on endpoints. Consult the [GRR agent
+installation on clients](#GRR-agent-installation-on-clients) section for additional information.
 
 ### GRR agent installation on clients
 
 After GRR Server is successfully deployed, client installers can be examined. GRR
-Server populates “./containerized-grr/installers” directory with installer packages for
+Server populates `./containerized-grr/installers` directory with installer packages for
 both 32-bit and 64-bit operating systems:  
   * dbg_GRR_x.x.x.x_amd64.exe  
   * dbg_GRR_x.x.x.x_i386.exe  
