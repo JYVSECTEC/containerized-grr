@@ -27,4 +27,4 @@ jobs:
     - name: Run the update script
       run: |
         bash scripts/update.sh
-        ls -all ../admin ../front ../worker
+        ls -all ./admin ./front ./worker
