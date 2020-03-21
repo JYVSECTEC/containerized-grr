@@ -26,6 +26,5 @@ jobs:
     # Runs a single command using the runners shell
     - name: Run the update script
       run: |
-        cd scripts
-        bash update.sh
+        bash scripts/update.sh
         ls -all ../admin ../front ../worker
