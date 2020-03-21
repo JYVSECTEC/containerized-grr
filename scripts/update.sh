@@ -15,6 +15,14 @@
 
 #! /bin/bash
 
+# Exit if error occur
+
+set -e
+
+# Allow the script to be executed from various locations
+
+cd "$(dirname "$0")"
+
 # Copy configuration file to the correct subdirectories
 
 echo "../admin ../worker ../front" | xargs -n 1 cp -v ../config.yaml
