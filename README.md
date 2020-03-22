@@ -31,15 +31,20 @@ This repository contains all the necessary configuration files that are needed t
 
 Containerized GRR server is successfully tested on following operating systems:
 
+CentOS 7 (1 dual-core CPU, 8 GB RAM) with following packages and their respectively
+versions:
+  * Docker Engine and Client v18.09.6  
+  * Docker Compose v1.24.0  
+
 Ubuntu 18.04 Bionic (1 dual-core CPU, 8 GB RAM) with following packages and their
 respectively versions:  
   * Docker Engine and Client v19.03.1  
   * Docker Compose v1.24.1
 
-CentOS 7 (1 dual-core CPU, 8 GB RAM) with following packages and their respectively
-versions:
-  * Docker Engine and Client v18.09.6  
-  * Docker Compose v1.24.0  
+Windows 10 version 2004 (1 quad-core CPU, 16 GB RAM) with following installed programs 
+and their respectively versions:
+  * Docker Engine and Client v19.03.5
+  * Docker Compose v1.25.4
 
 Docker images used during deployment process (hosted on Docker Hub):
   * grrdocker/grr:v3.3.0.8  
