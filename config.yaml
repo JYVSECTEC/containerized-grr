@@ -1,11 +1,11 @@
 ---
 # Use this config file for initialization
 
-Server.initialized: True
+Server.initialized: true
 
 # Database
 
-Datastore.implementation: MySQLAdvancedDataStore
+Datastore.implementation: "MySQLAdvancedDataStore"
 Mysql.host: "%(MYSQL_HOST|env)"
 Mysql.port: "%(MYSQL_PORT|env)"
 Mysql.database_name: "%(MYSQL_DATABASE_NAME|env)"
@@ -19,9 +19,9 @@ Mysql.password: "%(MYSQL_DATABASE_PASSWORD|env)"
 # https://github.com/google/grr-doc/blob/master/installing-grr-server/overview.md#datastore
 
 Database.aff4_enabled: false
-Database.implementation: MysqlDB
-Blobstore.implementation: DbBlobStore
-Database.enabled: True
+Database.implementation: "MysqlDB"
+Blobstore.implementation: "DbBlobStore"
+Database.enabled: true
 
 # Monitoring
 
@@ -35,57 +35,58 @@ Frontend.bind_port: "%(FRONTEND_SERVER_PORT|env)"
 Server.rsa_key_length: "%(SERVER_RSA_KEY_LENGTH|env)"
 PrivateKeys.server_key: "%(%(FRONTEND_PRIVATE_KEY_PATH|env)|file)"
 Frontend.certificate: "%(%(FRONTEND_CERT_PATH|env)|file)"
-PrivateKeys.executable_signing_private_key: "%(%(FRONTEND_PRIVATE_SIGNING_KEY_PATH|env)|file)"
+PrivateKeys.executable_signing_private_key: |
+                    "%(%(FRONTEND_PRIVATE_SIGNING_KEY_PATH|env)|file)"
 PrivateKeys.ca_key: "%(%(CA_PRIVATE_KEY_PATH|env)|file)"
 CA.certificate: "%(%(CA_CERT_PATH|env)|file)"
-Client.executable_signing_public_key: "%(%(FRONTEND_PUBLIC_SIGNING_KEY_PATH|env)|file)"
 
 # Logging
 
-Logging.path: /var/log/grr/
+Logging.path: "/var/log/grr/"
 # Use verbose logging only for debugging purposes
-# Logging.verbose: True
-Logging.verbose: False
+# Logging.verbose: true
+Logging.verbose: false
 Logging.domain: "%(EXTERNAL_HOSTNAME|env)"
 
 # Target specific configuration
 
 Target:Darwin:
-  Osquery.path: "%(OSQUERY_PATH_DARWIN|env)"
-  Config.includes:
-    - build.yaml
+    Osquery.path: "%(OSQUERY_PATH_DARWIN|env)"
+    Config.includes:
+        - "build.yaml"
 
 Target:Linux:
-  Osquery.path: "%(OSQUERY_PATH_LINUX|env)"
-  Config.includes:
-    - build.yaml
+    Osquery.path: "%(OSQUERY_PATH_LINUX|env)"
+    Config.includes:
+        - "build.yaml"
 
 Target:Windows:
-  Osquery.path: "%(PROGRAMFILES|env)\\osquery\\osqueryi.exe"
-  Config.includes:
-    - build.yaml
+    Osquery.path: "%(PROGRAMFILES|env)\\osquery\\osqueryi.exe"
+    Config.includes:
+        - "build.yaml"
 
 # Client Context
 
-Client.executable_signing_public_key: "%(%(FRONTEND_PUBLIC_SIGNING_KEY_PATH|env)|file)"
+Client.executable_signing_public_key: |
+            "%(%(FRONTEND_PUBLIC_SIGNING_KEY_PATH|env)|file)"
 Client.server_urls:
-  - "http://%(FRONTEND_BIND_ADDRESS|env):%(FRONTEND_BIND_PORT|env)/"
+    - "http://%(FRONTEND_BIND_ADDRESS|env):%(FRONTEND_BIND_PORT|env)/"
 
 Client Context:
-  PrivateKeys.ca_key: "%(%(CA_PRIVATE_KEY_PATH|env)|file)"
-  CA.certificate: "%(%(CA_CERT_PATH|env)|file)"
-  Client.foreman_check_frequency: "%(FOREMAN_CHECK_FREQUENCY|env)"
-  Client.poll_max: "%(POLL_MAX|env)"
-  Client.proxy_servers:
-    - "%(CLIENT_PROXY_SERVER|env)"
+    PrivateKeys.ca_key: "%(%(CA_PRIVATE_KEY_PATH|env)|file)"
+    CA.certificate: "%(%(CA_CERT_PATH|env)|file)"
+    Client.foreman_check_frequency: "%(FOREMAN_CHECK_FREQUENCY|env)"
+    Client.poll_max: "%(POLL_MAX|env)"
+    Client.proxy_servers: ["%(CLIENT_PROXY_SERVER|env)"]
 
 # AdminUI Context
 
 AdminUI Context:
-  AdminUI.csrf_secret_key: "%(CSRF_SECRET_KEY|env)"
-  AdminUI.url: "http://%(EXTERNAL_HOSTNAME|env):%(ADMINUI_PORT|env)"
-  AdminUI.port: "%(ADMINUI_PORT|env)"
-  AdminUI.webauth_manager: "%(ADMINUI_WEBAUTH_MANAGER|env)"
-  AdminUI.remote_user_trusted_ips:
-    - "%(REMOTE_TRUSTED_IPV4|env)"
-    - "%(REMOTE_TRUSTED_IPV6|env)"
+    AdminUI.csrf_secret_key: "%(CSRF_SECRET_KEY|env)"
+    AdminUI.url: "http://%(EXTERNAL_HOSTNAME|env):%(ADMINUI_PORT|env)"
+    AdminUI.port: "%(ADMINUI_PORT|env)"
+    AdminUI.webauth_manager: "%(ADMINUI_WEBAUTH_MANAGER|env)"
+    AdminUI.heading: "JYVSECTEC"
+    AdminUI.remote_user_trusted_ips:
+        - "%(REMOTE_TRUSTED_IPV4|env)"
+        - "%(REMOTE_TRUSTED_IPV6|env)"
