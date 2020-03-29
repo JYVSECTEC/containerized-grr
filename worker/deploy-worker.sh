@@ -1,7 +1,5 @@
 #  Copyright 2019-2020 JYVSECTEC/Joni Ahonen
 #
-#  Copyright 2018-2019 Spotify AB.
-#
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
@@ -29,7 +27,7 @@ CHECK="\e[32m[+]\e[0m"
 
 echo "###"
 echo "###"
-echo "###     GRR ADMIN COMPONENT CONTAINER IS ABOUT TO BE STARTED"
+echo "###     GRR WORKER COMPONENT CONTAINER IS ABOUT TO BE STARTED"
 echo "###"
 echo "###"
 
@@ -37,7 +35,7 @@ echo "###"
 
 sleep 20
 
-# Activate virtual environment so that the binaries are usable from PATH
+# Activate virtual environment
 
 echo -e "$CHECK Activate Python virtual environment"
 source /usr/share/grr-server/bin/activate
@@ -53,8 +51,8 @@ grr_config_updater set_var PrivateKeys.server_key "$(cat $FRONTEND_PRIVATE_KEY_P
 grr_config_updater set_var CA.certificate "$(cat $CA_CERT_PATH)" -p "Config.writeback=/etc/grr/server.local.yaml"
 grr_config_updater set_var PrivateKeys.ca_key "$(cat $CA_PRIVATE_KEY_PATH)" -p "Config.writeback=/etc/grr/server.local.yaml"
 
-# Deploy admin_ui component
+# Deploy worker component
 
-echo -e "$CHECK Start the admin_ui component"
-grr_admin_ui \
-    --disallow_missing_config_definitions
+echo -e "$CHECK Start the worker component"
+grr_worker \
+  --disallow_missing_config_definitions
