@@ -1,2 +1,5 @@
 *
-!.gitignore
+!deploy-front.sh
+!Dockerfile
+!prepare-certs.sh
+!repack-clients.sh

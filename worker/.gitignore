@@ -1,2 +1,4 @@
 *
-!.gitignore
+!deploy-worker.sh
+!Dockerfile
+!prepare-certs.sh

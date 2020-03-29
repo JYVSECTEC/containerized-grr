@@ -1,2 +1,4 @@
 *
-!.gitignore
+!deploy-admin.sh
+!Dockerfile
+!prepare-certs.sh
