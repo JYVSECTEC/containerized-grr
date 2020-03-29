@@ -1,0 +1,110 @@
+---
+version: "3.7"
+
+networks:
+  static:
+    driver: bridge
+    external: true
+    ipam:
+      config:
+        - subnet: ${NETWORK}
+
+volumes:
+  dbdata:
+
+services:
+  admin:
+    build:
+      context: ./
+      dockerfile: ./admin/Dockerfile
+    container_name: grr-admin
+    depends_on:
+      - mysql
+    env_file:
+      - ./env/shared.env
+    image: grr-admin
+    networks:
+      static:
+        ipv4_address: ${ADMIN_STATIC_IPv4}
+    restart: always
+    volumes:
+      - "./config.yaml:/usr/share/grr-server/install_data/etc/server.local.yaml"
+
+  front:
+    build:
+      context: ./
+      dockerfile: ./front/Dockerfile
+    container_name: grr-front
+    depends_on:
+      - mysql
+    env_file:
+      - ./env/shared.env
+    image: grr-front
+    networks:
+      static:
+        ipv4_address: ${FRONT_STATIC_IPv4}
+    restart: always
+    volumes:
+      - "./installers:/usr/share/grr-server/executables/installers"
+      - "./config.yaml:/usr/share/grr-server/install_data/etc/server.local.yaml"
+
+  mysql:
+    command: "--max_allowed_packet=1073741824 \
+              --innodb-log-file-size=1073741824 \
+              --explicit_defaults_for_timestamp=ON"
+    container_name: grr-mysql
+    env_file:
+      - ./env/shared.env
+    image: mysql:5.7
+    networks:
+      static:
+        ipv4_address: ${MYSQL_STATIC_IPv4}
+    restart: always
+    volumes:
+      - "dbdata:/var/lib/mysql"
+
+  prometheus:
+    container_name: grr-prometheus
+    image: prom/prometheus:latest
+    networks:
+      static:
+        ipv4_address: ${PROMETHEUS_STATIC_IPv4}
+    ports:
+      - "9090:9090"
+    restart: always
+    volumes:
+      - "./monitor/prometheus.yml:/etc/prometheus/prometheus.yml"
+
+  proxy:
+    container_name: grr-proxy
+    image: nginx:latest
+    networks:
+      static:
+        ipv4_address: ${PROXY_STATIC_IPv4}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    restart: always
+    volumes:
+      - "./nginx/grr.conf:/etc/nginx/conf.d/default.conf"
+      - "./nginx/.htpasswd:/etc/nginx/.htpasswd"
+      - "./nginx/cert.key:/etc/ssl/certs/cert.key"
+      - "./nginx/cert.crt:/etc/ssl/certs/cert.crt"
+
+  worker:
+    build:
+      context: ./
+      dockerfile: ./worker/Dockerfile
+    container_name: grr-worker
+    depends_on:
+      - mysql
+    env_file:
+      - ./env/shared.env
+    image: grr-worker
+    networks:
+      static:
+        ipv4_address: ${WORKER_STATIC_IPv4}
+    restart: always
+    volumes:
+      - "./config.yaml:/usr/share/grr-server/install_data/etc/server.local.yaml"
