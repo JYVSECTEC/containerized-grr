@@ -18,7 +18,7 @@
 # Pin to tested version number
 FROM grrdocker/grr:v3.3.0.8
 
-# EXPOSE 5003
+EXPOSE 5003
 
 ENV MONITORING_HTTP_PORT=5003
 ENV CERTS_PATH=/etc/grr/certs
