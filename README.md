@@ -89,7 +89,7 @@ installation on clients](#GRR-agent-installation-on-clients) section for additio
 ### GRR agent installation on clients
 
 After GRR server is successfully deployed, client installers can be examined. GRR
-Server populates `./containerized-grr/installers` directory with installer packages for
+server populates `./containerized-grr/installers` directory with installer packages for
 both 32-bit and 64-bit operating systems:  
   * dbg_GRR_x.x.x.x_amd64.exe  
   * dbg_GRR_x.x.x.x_i386.exe  
@@ -135,7 +135,7 @@ the container execution terminates.
 
 #### Monitoring  
 
-Containerized GRR includes Prometheus monitoring system which enables investigator to observe the status of each GRR sever component and query monitoring data for occurred changes. However, it should be noticed that the monitoring system is
+Containerized GRR includes Prometheus monitoring system which enables investigator to observe the status of each GRR server component and query monitoring data for occurred changes. However, it should be noticed that the monitoring system is
 only implemented to bring additional feature for the server execution. Any extensively testing of Prometheus is not made.  
 
 #### Proxy
