@@ -68,12 +68,12 @@ openssl x509 \
         -days 365 \
         -out openssl/front-end.crt
 
-cat openssl/ca-private.key | base64 | tr -d '\n' > openssl/enc-ca.key
-cat openssl/ca.crt | base64 | tr -d '\n' > openssl/enc-ca.crt
-cat openssl/front-end.crt | base64 | tr -d '\n' > openssl/enc-front-end.crt
-cat openssl/front-end-private.key | base64 | tr -d '\n' > openssl/enc-front-end-private.key
-cat openssl/front-end-signing.key | base64 | tr -d '\n' > openssl/enc-front-end-private-signing.key
-cat openssl/front-end-signing.key | base64 | tr -d '\n' > openssl/enc-front-end-signing.key
+base64 -w0 openssl/ca-private.key > openssl/enc-ca.key
+base64 -w0 openssl/ca.crt > openssl/enc-ca.crt
+base64 -w0 openssl/front-end.crt > openssl/enc-front-end.crt
+base64 -w0 openssl/front-end-private.key > openssl/enc-front-end-private.key
+base64 -w0 openssl/front-end-signing.key > openssl/enc-front-end-private-signing.key
+base64 -w0 openssl/front-end-signing.key > openssl/enc-front-end-signing.key
 
 # Declare the environment variables with the contents of the files
 
