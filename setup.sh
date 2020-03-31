@@ -196,8 +196,7 @@ EOT
 
 # Create basic admin/grr user for authentication
 
-echo -n 'admin:' > ./nginx/.htpasswd
-echo -n 'grr' | openssl passwd -apr1 -stdin > ./nginx/.htpasswd
+{ echo -n 'admin:' & echo -n 'grr' | openssl passwd -apr1 -stdin; } > ./nginx/.htpasswd
 
 # Check if the nginx configuration file syntax is correct
 
