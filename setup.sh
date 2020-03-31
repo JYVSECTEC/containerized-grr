@@ -211,6 +211,27 @@ docker run --rm \
             nginx -t
 echo -e "$CHECK Nginx configuration syntax check succeeded"
 
+# Create configuration file for prometheus
+
+echo -e "$CHECK Write configuration file for monitoring system"
+cat <<EOT >./monitor/prometheus.yaml
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'grr-admin'
+    static_configs:
+    - targets: ['${ADMIN_STATIC_IPv4}:5005']
+
+  - job_name: 'grr-front'
+    static_configs:
+    - targets: ['${FRONT_STATIC_IPv4}:5004']
+
+  - job_name: 'grr-worker'
+    static_configs:
+    - targets: ['${WORKER_STATIC_IPv4}:5003']
+EOT
+
 # Inform user
 
 echo -e "$CHECK Setup script completed"
