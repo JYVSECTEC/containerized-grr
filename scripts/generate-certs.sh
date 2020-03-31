@@ -31,11 +31,15 @@ cd "$(dirname "$0")"
 
 CHECK="\e[32m[+]\e[0m"
 
+# Create directory for files
+
+mkdir openssl
+
 # Certificate and key generation
 
 echo "$CHECK Generating certificates and keys"
-CA_PRIVATE_KEY=$(openssl genrsa 2048)
-CA_CERT=$(openssl req \
+openssl genrsa -out openssl/ca-private.key 2048
+openssl req \
         -newkey rsa:2048 \
         -new \
         -nodes \
@@ -43,37 +47,40 @@ CA_CERT=$(openssl req \
         -days 365 \
         -subj '/CN=ca.grr/O=JYVSECTEC/C=FI' \
         -sha256 \
-        -key <(echo "$CA_PRIVATE_KEY"))
+        -key openssl/ca-private.key \
+        -out openssl/ca.crt
 
-FRONTEND_PRIVATE_KEY=$(openssl genrsa 2048)
-FRONTEND_PRIVATE_SIGNING_KEY=$(openssl genrsa 2048)
-FRONTEND_SIGNING_KEY=$(openssl rsa -passin pass: -in <(echo "$FRONTEND_PRIVATE_SIGNING_KEY") -pubout)
-FRONTEND_CSR=$(openssl req \
+openssl genrsa -out openssl/front-end-private.key 2048
+openssl genrsa -out openssl/front-end-private-signing.key 2048
+openssl rsa -passin pass: -in openssl/front-end-private-signing.key -pubout -out openssl/front-end-signing.key
+openssl req \
         -new \
         -nodes \
-        -key <(echo "$FRONTEND_PRIVATE_KEY") \
-        -subj '/CN=front.grr/O=JYVSECTEC/C=FI')
-FRONTEND_CERT=$(openssl x509 \
+        -key openssl/front-end-private.key \
+        -subj '/CN=front.grr/O=JYVSECTEC/C=FI' \
+        -out openssl/front-end.csr
+openssl x509 \
         -req \
-        -in <(echo "$FRONTEND_CSR") \
-        -CA <(echo "$CA_CERT") \
-        -CAkey <(echo "$CA_PRIVATE_KEY") \
+        -in openssl/front-end.csr \
+        -CA openssl/ca.crt \
+        -CAkey openssl/ca-private.key \
         -set_serial 2 \
-        -days 365)
+        -days 365 \
+        -out openssl/front-end.crt
 
-CA_PRIVATE_KEY=$(echo -n $CA_PRIVATE_KEY | base64)
-CA_CERT=$(echo -n $CA_CERT | base64)
-FRONTEND_PRIVATE_KEY=$(echo -n $FRONTEND_PRIVATE_KEY | base64)
-FRONTEND_PRIVATE_SIGNING_KEY=$(echo -n $FRONTEND_PRIVATE_SIGNING_KEY | base64)
-FRONTEND_SIGNING_KEY=$(echo -n $FRONTEND_SIGNING_KEY | base64)
-FRONTEND_CERT=$(echo -n $FRONTEND_CERT | base64)
+cat openssl/ca-private.key | base64 | tr -d '\n' > openssl/enc-ca.key
+cat openssl/ca.crt | base64 | tr -d '\n' > openssl/enc-ca.crt
+cat openssl/front-end.crt | base64 | tr -d '\n' > openssl/enc-front-end.crt
+cat openssl/front-end-private.key | base64 | tr -d '\n' > openssl/enc-front-end-private.key
+cat openssl/front-end-signing.key | base64 | tr -d '\n' > openssl/enc-front-end-private-signing.key
+cat openssl/front-end-signing.key | base64 | tr -d '\n' > openssl/enc-front-end-signing.key
 
-# Place contents of the variables to the file
+# Declare the environment variables with the contents of the files
 
 echo -e "$CHECK Storing the certificates and keys"
-sed -i "s|^CA_PRIVATE_KEY\=.*$|CA_PRIVATE_KEY\=$(echo $CA_PRIVATE_KEY)|" ../env/shared.env
-sed -i "s|^CA_CERT\=.*$|CA_CERT\=$(echo $CA_CERT)|" ../env/shared.env
-sed -i "s|^FRONTEND_CERT\=.*$|FRONTEND_CERT\=$(echo $FRONTEND_CERT)|" ../env/shared.env
-sed -i "s|^FRONTEND_PRIVATE_KEY\=.*$|FRONTEND_PRIVATE_KEY\=$(echo $FRONTEND_PRIVATE_KEY)|" ../env/shared.env
-sed -i "s|^FRONTEND_PRIVATE_SIGNING_KEY\=.*$|FRONTEND_PRIVATE_SIGNING_KEY\=$(echo $FRONTEND_PRIVATE_SIGNING_KEY)|" ../env/shared.env
-sed -i "s|^FRONTEND_PUBLIC_SIGNING_KEY\=.*$|FRONTEND_PUBLIC_SIGNING_KEY\=$(echo $FRONTEND_SIGNING_KEY)|" ../env/shared.env
+sed -i "s|^CA_PRIVATE_KEY\=.*$|CA_PRIVATE_KEY\=$(cat openssl/enc-ca.key)|" ../env/shared.env
+sed -i "s|^CA_CERT\=.*$|CA_CERT\=$(cat openssl/enc-ca.crt)|" ../env/shared.env
+sed -i "s|^FRONTEND_CERT\=.*$|FRONTEND_CERT\=$(cat openssl/enc-front-end.crt)|" ../env/shared.env
+sed -i "s|^FRONTEND_PRIVATE_KEY\=.*$|FRONTEND_PRIVATE_KEY\=$(cat openssl/enc-front-end-private.key)|" ../env/shared.env
+sed -i "s|^FRONTEND_PRIVATE_SIGNING_KEY\=.*$|FRONTEND_PRIVATE_SIGNING_KEY\=$(cat openssl/enc-front-end-private-signing.key)|" ../env/shared.env
+sed -i "s|^FRONTEND_PUBLIC_SIGNING_KEY\=.*$|FRONTEND_PUBLIC_SIGNING_KEY\=$(cat openssl/enc-front-end-signing.key)|" ../env/shared.env
