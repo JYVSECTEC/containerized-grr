@@ -35,12 +35,12 @@ echo "###"
 
 sleep 20
 
-# Activate virtual environment
+# Activate virtual environment so that the executables are usable from PATH
 
 echo -e "$CHECK Activate Python virtual environment"
 source /usr/share/grr-server/bin/activate
 
-# Use 'grr_config_updater set_var' to place raw values of certificates and keys
+# Use 'grr_config_updater set_var' to place certificates and keys as raw values
 # See issue https://github.com/google/grr/issues/646
 
 echo -e "$CHECK Write raw certificate data to configuration file"

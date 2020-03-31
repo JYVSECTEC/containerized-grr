@@ -35,7 +35,7 @@ echo "###"
 
 sleep 10
 
-# Activate virtual environment
+# Activate virtual environment so that the executables are usable from PATH
 
 echo -e "$CHECK Activate Python virtual environment"
 source /usr/share/grr-server/bin/activate
