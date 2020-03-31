@@ -18,6 +18,7 @@
 # Exit if error occur
 
 set -e
+#trap "echo $BASH_COMMAND" EXIT
 
 # Allow the script to be executed from various locations
 
@@ -32,16 +33,19 @@ ERROR="\e[0;91m[x]\e[0m"
 
 # Ensure that user has correct privileges to run the script
 
-if [[ ! "$(groups $(whoami))" == *docker* || "$EUID" -ne 0 ]]; then
-    echo "$ERROR Current user $(whoami) is not in docker group or script is not run with root privileges"
-    exit
+if [[ $EUID -ne 0 ]]; then
+    if [[ ! "$(groups $(whoami))" == *docker* ]]; then
+        echo -e "$ERROR Current user $(whoami) is not in docker group or script is not run with root privileges"
+    else
+        echo -e "$CHECK Current user is in docker group"
+    fi
 fi
 
 # Ensure that required packages are installed and can be found from PATH
 
 for VALUE in "docker" "docker-compose" "openssl"; do
     command -v "$VALUE" > /dev/null 2>&1
-    echo -e "$CHECK $_ found."
+    echo -e "$CHECK $_ found from PATH"
 done
 
 # Ask user input for the network to be used
@@ -76,10 +80,7 @@ NETWORK=${SUBNET}
 EOT
 echo -e "$CHECK Static IP addresses set."
 
-# Check that the Docker Compose configuration file syntax is correct
-
-docker-compose config > /dev/null 2>&1
-echo -e "$CHECK Docker Compose config succeeded."
+source .env
 
 # Set the proper environment variables to initialize GRR
 
@@ -115,6 +116,11 @@ bash scripts/generate-csrf.sh
 # Generate certificates and keys for GRR
 
 bash scripts/generate-certs.sh
+
+# Check that the Docker Compose configuration file syntax is correct
+
+docker-compose config > /dev/null 2>&1
+echo -e "$CHECK Docker Compose config succeeded."
 
 # Create a self-signed certificate
 
@@ -156,7 +162,7 @@ server {
 server {
     listen 80 default_server;
     server_name _;
-    return 301 https://$host$request_uri;
+    return 301 https://'$host$request_uri';
 }
 
 server {
@@ -173,11 +179,11 @@ server {
     location / {
       auth_basic              "restricted site";
       auth_basic_user_file    /etc/nginx/.htpasswd;
-      proxy_set_header        X-Remote-User $remote_user;
-      proxy_set_header        Host $host;
-      proxy_set_header        X-Real-IP $remote_addr;
-      proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
-      proxy_set_header        X-Forwarded-Proto $scheme;
+      proxy_set_header        X-Remote-User '$remote_user';
+      proxy_set_header        Host '$host';
+      proxy_set_header        X-Real-IP '$remote_addr';
+      proxy_set_header        X-Forwarded-For '$proxy_add_x_forwarded_for';
+      proxy_set_header        X-Forwarded-Proto '$scheme';
 
       # Fix the “It appears that your reverse proxy set up is broken" error.
       proxy_pass          http://${ADMIN_STATIC_IPv4}:8000;
@@ -199,15 +205,14 @@ docker pull --quiet nginx:latest
 docker run --rm \
             --interactive \
             --tty \
-            --volume $(pwd)/nginx/default.conf:/etc/nginx/conf.d/default.conf \
-            --volume $(pwd)/nginx/cert.key:/etc/ssl/certs/cert.key \
-            --volume $(pwd)/nginx/cert.crt:/etc/ssl/certs/cert.crt \
+            --volume "$(pwd)/nginx/grr.conf:/etc/nginx/conf.d/default.conf" \
+            --volume "$(pwd)/nginx/cert.key:/etc/ssl/certs/cert.key" \
+            --volume "$(pwd)/nginx/cert.crt:/etc/ssl/certs/cert.crt" \
             nginx:latest \
             nginx -t
 echo -e "$CHECK Nginx configuration syntax check succeeded"
 
 # Inform user
 
-COMMAND='docker create network --driver=bridge --subnet=${SUBNET} static'
 echo -e "$CHECK Setup script completed"
-echo -e "$WARNING Use command: $COMMAND to initialize Docker network before you build up the GRR"
+echo -e "$WARNING Use command: 'docker create network --driver=bridge --subnet=${SUBNET} static' to initialize Docker network before you build up the GRR"
