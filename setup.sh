@@ -162,7 +162,7 @@ server {
 server {
     listen 80 default_server;
     server_name _;
-    return 301 https://'$host$request_uri';
+    return 301 https://\$host\$request_uri;
 }
 
 server {
@@ -179,11 +179,11 @@ server {
     location / {
       auth_basic              "restricted site";
       auth_basic_user_file    /etc/nginx/.htpasswd;
-      proxy_set_header        X-Remote-User '$remote_user';
-      proxy_set_header        Host '$host';
-      proxy_set_header        X-Real-IP '$remote_addr';
-      proxy_set_header        X-Forwarded-For '$proxy_add_x_forwarded_for';
-      proxy_set_header        X-Forwarded-Proto '$scheme';
+      proxy_set_header        X-Remote-User \$remote_user;
+      proxy_set_header        Host \$host;
+      proxy_set_header        X-Real-IP \$remote_addr;
+      proxy_set_header        X-Forwarded-For \$proxy_add_x_forwarded_for;
+      proxy_set_header        X-Forwarded-Proto \$scheme;
 
       # Fix the “It appears that your reverse proxy set up is broken" error.
       proxy_pass          http://${ADMIN_STATIC_IPv4}:8000;
@@ -214,4 +214,4 @@ echo -e "$CHECK Nginx configuration syntax check succeeded"
 # Inform user
 
 echo -e "$CHECK Setup script completed"
-echo -e "$WARNING Use command: 'docker create network --driver=bridge --subnet=${SUBNET} static' to initialize Docker network before you build up the GRR"
+echo -e "$WARNING Use command: 'docker network create --driver=bridge --subnet=${SUBNET} static' to initialize Docker network before you build up the GRR"
