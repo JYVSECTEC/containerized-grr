@@ -25,15 +25,15 @@ set -e
 
 cd "$(dirname "$0")"
 
-# Import env
-
 # Variable declarations
 
 CHECK="\e[32m[+]\e[0m"
 
-# Create directory for files
+# Create directory for files if does not exists
 
-mkdir openssl
+if [ ! -d openssl ]; then
+        mkdir openssl
+fi
 
 # Certificate and key generation
 
