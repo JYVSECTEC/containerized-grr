@@ -45,7 +45,10 @@ services:
         ipv4_address: ${FRONT_STATIC_IPv4}
     restart: always
     volumes:
-      - "./installers:/usr/share/grr-server/executables/installers"
+      - type: bind
+        source: ./installers
+        target: /usr/share/grr-server/executables/installers
+    volumes:
       - "./config.yaml:/usr/share/grr-server/install_data/etc/server.local.yaml"
 
   mysql:
@@ -72,8 +75,8 @@ services:
     ports:
       - "9090:9090"
     restart: always
-    volumes:
-      - "./monitor/prometheus.yml:/etc/prometheus/prometheus.yml"
+    # volumes:
+    #   - "./monitor/prometheus.yml:/etc/prometheus/prometheus.yml"
 
   proxy:
     container_name: grr-proxy
