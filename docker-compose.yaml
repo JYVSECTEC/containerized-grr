@@ -75,8 +75,8 @@ services:
     ports:
       - "9090:9090"
     restart: always
-    # volumes:
-    #   - "./monitor/prometheus.yml:/etc/prometheus/prometheus.yml"
+    volumes:
+      - "./monitor/prometheus.yaml:/etc/prometheus/prometheus.yml"
 
   proxy:
     container_name: grr-proxy
