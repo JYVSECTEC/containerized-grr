@@ -57,7 +57,7 @@ read -p "Create Docker subnetwork? default: ${SUBNET} [y/N]: " RESPONSE
 if [[ "$RESPONSE" =~ ^([yY])$ ]]; then
     echo -en "$WARNING "
     read -p "Give a subnet: " RESPONSE
-    if [[ ! -z "$RESPONSE" ]]; then
+    if [[ -n "$RESPONSE" ]]; then
         NETWORK="${RESPONSE} "
         echo -e "$CHECK Using custom network ${SUBNET}"
     else
@@ -186,7 +186,7 @@ server {
       proxy_set_header        X-Forwarded-For \$proxy_add_x_forwarded_for;
       proxy_set_header        X-Forwarded-Proto \$scheme;
 
-      # Fix the “It appears that your reverse proxy set up is broken" error.
+      # Fix the "It appears that your reverse proxy set up is broken" error.
       proxy_pass          http://${ADMIN_STATIC_IPv4}:8000;
       proxy_read_timeout  180;
 
