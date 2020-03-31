@@ -36,6 +36,7 @@ ERROR="\e[0;91m[x]\e[0m"
 if [[ $EUID -ne 0 ]]; then
     if [[ ! "$(groups $(whoami))" == *docker* ]]; then
         echo -e "$ERROR Current user $(whoami) is not in docker group or script is not run with root privileges"
+        exit
     else
         echo -e "$CHECK Current user is in docker group"
     fi
