@@ -44,12 +44,8 @@ grr_config_updater set_var Frontend.certificate "$(cat $FRONTEND_CERT_PATH)" -p 
 grr_config_updater set_var PrivateKeys.server_key "$(cat $FRONTEND_PRIVATE_KEY_PATH)" -p "Config.writeback=/etc/grr/server.local.yaml"
 grr_config_updater set_var CA.certificate "$(cat $CA_CERT_PATH)" -p "Config.writeback=/etc/grr/server.local.yaml"
 grr_config_updater set_var PrivateKeys.ca_key "$(cat $CA_PRIVATE_KEY_PATH)" -p "Config.writeback=/etc/grr/server.local.yaml"
-grr_config_updater set_var Client.proxy_servers "$(cat $CLIENT_PROXY_SERVER)" -p "Config.writeback=/etc/grr/server.local.yaml"
-grr_config_updater set_var Client.server_urls "$(cat http://${FRONTEND_BIND_ADDRESS}:${FRONTEND_BIND_PORT}/)" -p "Config.writeback=/etc/grr/server.local.yaml"
-grr_config_updater set_var Client.foreman_check_frequency "$(cat $FOREMAN_CHECK_FREQUENCY)" -p "Config.writeback=/etc/grr/server.local.yaml"
-grr_config_updater set_var Client.poll_max "$(cat $POLL_MAX)" -p "Config.writeback=/etc/grr/server.local.yaml"
 
 # Repack clients
 
 echo -e "$CHECK Repack clients"
-grr_config_updater repack_clients
+grr_config_updater repack_clients --disallow_missing_config_definitions
