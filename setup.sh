@@ -259,9 +259,9 @@ EOT
 
 # Client configuration
 
+cat <<EOT >>./config.yaml
 ## Client Context
 
-cat <<EOT >>./config.yaml
 Client Context:
     Config.includes:
         - '/etc/grr/server.local.yaml'
