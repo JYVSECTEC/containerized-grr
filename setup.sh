@@ -117,8 +117,6 @@ CSRF_SECRET_KEY=
 EXTERNAL_HOSTNAME=${PROXY_STATIC_IPv4}
 FOREMAN_CHECK_FREQUENCY=30
 FRONTEND_CERT=
-FRONTEND_BIND_ADDRESS=${CLIENT_PROXY_SERVER}
-FRONTEND_BIND_PORT=8080
 FRONTEND_PRIVATE_KEY=
 FRONTEND_PRIVATE_SIGNING_KEY=
 FRONTEND_PUBLIC_SIGNING_KEY=
@@ -259,6 +257,22 @@ scrape_configs:
     - targets: ['${WORKER_STATIC_IPv4}:5003']
 EOT
 
+# Client configuration
+
+## Client Context
+
+cat <<EOT >>./config.yaml
+Client Context:
+    Config.includes:
+        - '/etc/grr/server.local.yaml'
+    Client.proxy_servers:
+        - ${CLIENT_PROXY_SERVER}
+    Client.server_urls:
+        - "http://${CLIENT_PROXY_SERVER}:8080"
+    Client.foreman_check_frequency: ${FOREMAN_CHECK_FREQUENCY}
+    Client.poll_max: ${POLL_MAX}
+
+EOT
 # Inform user
 
 echo -e "$CHECK Setup script completed"
