@@ -59,7 +59,7 @@ if [[ "$RESPONSE" =~ ^([yY])$ ]]; then
     echo -en "$WARNING "
     read -p "Give a subnet: " RESPONSE
     if [[ -n "$RESPONSE" ]]; then
-        NETWORK="${RESPONSE}"
+        SUBNET="${RESPONSE}"
         echo -e "$CHECK Using custom network ${SUBNET}"
     else
         echo -e "$ERROR You must give a correct value"
