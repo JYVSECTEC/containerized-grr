@@ -266,9 +266,9 @@ Client Context:
     Config.includes:
         - '/etc/grr/server.local.yaml'
     Client.proxy_servers:
-        - ${CLIENT_PROXY_SERVER}:8080
+        - ${CLIENT_PROXY_SERVER}:8080/
     Client.server_urls:
-        - http://${CLIENT_PROXY_SERVER}:8080
+        - http://${CLIENT_PROXY_SERVER}:8080/
     Client.foreman_check_frequency: 30
     Client.poll_max: 5
 
