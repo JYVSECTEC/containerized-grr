@@ -107,14 +107,18 @@ fi
 # Set the proper environment variables to initialize GRR
 
 cat <<EOT >./env/shared.env
-ADMINUI_WEBAUTH_MANAGER=RemoteUserWebAuthManager
 ADMINUI_HEADING=JYVSECTEC
+ADMINUI_PORT=8000
+ADMINUI_WEBAUTH_MANAGER=RemoteUserWebAuthManager
 CA_CERT=
 CA_PRIVATE_KEY=
 CLIENT_PROXY_SERVER=${CLIENT_PROXY_SERVER}
 CSRF_SECRET_KEY=
 EXTERNAL_HOSTNAME=${PROXY_STATIC_IPv4}
+FOREMAN_CHECK_FREQUENCY=30
 FRONTEND_CERT=
+FRONTEND_BIND_ADDRESS=${FRONT_STATIC_IPv4}
+FRONTEND_BIND_PORT=8080
 FRONTEND_PRIVATE_KEY=
 FRONTEND_PRIVATE_SIGNING_KEY=
 FRONTEND_PUBLIC_SIGNING_KEY=
@@ -128,6 +132,7 @@ MYSQL_PASSWORD=grr
 OSQUERY_PATH_DARWIN="/usr/bin/darwin/osqueryi"
 #OSQUERY_PATH_WINDOWS="C:\\Program Files\\osquery\\osqueryi.exe"
 OSQUERY_PATH_LINUX="/usr/bin/osqueryi"
+POLL_MAX=5
 REMOTE_TRUSTED_IPV4=${PROXY_STATIC_IPv4}
 REMOTE_TRUSTED_IPV6=::ffff:${PROXY_STATIC_IPv4}
 EOT
@@ -183,8 +188,7 @@ server {
 }
 
 server {
-    listen 80 default_server;
-    server_name _;
+    listen 80;
     return 301 https://\$host\$request_uri;
 }
 
