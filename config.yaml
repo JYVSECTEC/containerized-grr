@@ -51,12 +51,6 @@ AdminUI Context:
     Config.includes:
         - '/etc/grr/server.local.yaml'
 
-## Client Context
-
-Client Context:
-    Config.includes:
-        - '/etc/grr/server.local.yaml'
-
 ## Frontend Context
 
 HTTPServer Context:
@@ -64,6 +58,8 @@ HTTPServer Context:
     Logging.path: /var/log/grr/frontend
     Config.includes:
         - '/etc/grr/server.local.yaml'
+
+## Worker Context
 
 Worker Context:
     Monitoring.http_port: '%(MONITORING_HTTP_PORT|env)'
