@@ -260,6 +260,7 @@ EOT
 # Client configuration
 
 cat <<EOT >>./config.yaml
+
 ## Client Context
 
 Client Context:
