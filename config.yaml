@@ -32,7 +32,6 @@ Monitoring.emergency_access_email: '%(MONITORING_EMERGENCY_EMAIL|env)'
 ## Logging
 
 Installer.logfile: '%(Logging.path)/client_installer.txt'
-Logging.domain: '%(EXTERNAL_HOSTNAME|env)'
 
 # Context specific configurations
 
@@ -70,19 +69,19 @@ Worker Context:
 ## Target specific Contexts
 
 Target:Darwin:
-    Osquery.path: '%(OSQUERY_PATH_DARWIN|env)'
+    Osquery.path: '/usr/bin/darwin/osqueryi'
     Config.includes:
         - 'build.yaml'
     Logging.path: /var/log/grr
 
 Target:Linux:
-    Osquery.path: '%(OSQUERY_PATH_LINUX|env)'
+    Osquery.path: 'C:\\Program Files\\osquery\\osqueryi.exe'
     Config.includes:
         - 'build.yaml'
     Logging.path: /var/log/grr
 
 Target:Windows:
-    Osquery.path: '%(PROGRAMFILES|env)\\osquery\\osqueryi.exe'
+    Osquery.path: '/usr/bin/osqueryi'
     Config.includes:
         - 'build.yaml'
     Logging.path: 'C:\Windows\Temp\grr'
