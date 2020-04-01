@@ -72,7 +72,7 @@ base64 -w0 openssl/ca-private.key > openssl/enc-ca.key
 base64 -w0 openssl/ca.crt > openssl/enc-ca.crt
 base64 -w0 openssl/front-end.crt > openssl/enc-front-end.crt
 base64 -w0 openssl/front-end-private.key > openssl/enc-front-end-private.key
-base64 -w0 openssl/front-end-signing.key > openssl/enc-front-end-private-signing.key
+base64 -w0 openssl/front-end-private-signing.key > openssl/enc-front-end-private-signing.key
 base64 -w0 openssl/front-end-signing.key > openssl/enc-front-end-signing.key
 
 # Declare the environment variables with the contents of the files
