@@ -48,4 +48,7 @@ grr_config_updater set_var PrivateKeys.ca_key "$(cat $CA_PRIVATE_KEY_PATH)" -p "
 # Repack clients
 
 echo -e "$CHECK Repack clients"
-grr_config_updater repack_clients --secondary_configs server.local.yaml
+grr_config_updater repack_clients --secondary_configs server.local.yaml \
+    -p Target:Windows:Client.proxy_servers="$(cat $CLIENT_PROXY_SERVER)" \
+    -p Target:Linux:Client.proxy_servers="$(cat $CLIENT_PROXY_SERVER)" \
+    -p Target:Darwin:Client.proxy_servers="$(cat $CLIENT_PROXY_SERVER)"
