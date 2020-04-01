@@ -30,6 +30,7 @@ CHECK="\e[32m[+]\e[0m"
 WARNING="\e[33m[!]\e[0m"
 ERROR="\e[0;91m[x]\e[0m"
 : "${SUBNET:=172.10.0.0/24}"
+: "${CLIENT_PROXY_SERVER:=localhost}"
 
 # Ensure that user has correct privileges to run the script
 
@@ -58,7 +59,7 @@ if [[ "$RESPONSE" =~ ^([yY])$ ]]; then
     echo -en "$WARNING "
     read -p "Give a subnet: " RESPONSE
     if [[ -n "$RESPONSE" ]]; then
-        NETWORK="${RESPONSE} "
+        NETWORK="${RESPONSE}"
         echo -e "$CHECK Using custom network ${SUBNET}"
     else
         echo -e "$ERROR You must give a correct value"
@@ -83,6 +84,26 @@ echo -e "$CHECK Static IP addresses set."
 
 source .env
 
+# Ask the public IP address or domain name to be used for client control
+
+echo -en "$WARNING "
+read -p "Give an IP address or domain that client should use to connect GRR server? default: ${CLIENT_PROXY_SERVER} [y/N]: " RESPONSE
+
+if [[ "$RESPONSE" =~ ^([yY])$ ]]; then
+    echo -en "$WARNING "
+    read -p "Give IP address or domain: " RESPONSE
+    if [[ -n "$RESPONSE" ]]; then
+        CLIENT_PROXY_SERVER="${RESPONSE}"
+        echo -e "$CHECK Proxy server defined to ${CLIENT_PROXY_SERVER}"
+    else
+        echo -e "$ERROR You must give a correct value"
+        echo -e "$WARNING Using ${CLIENT_PROXY_SERVER}"
+    fi
+else
+    echo -e "$CHECK Using ${CLIENT_PROXY_SERVER}"
+fi
+
+
 # Set the proper environment variables to initialize GRR
 
 cat <<EOT >./env/shared.env
@@ -90,6 +111,7 @@ ADMINUI_WEBAUTH_MANAGER=RemoteUserWebAuthManager
 ADMINUI_HEADING=JYVSECTEC
 CA_CERT=
 CA_PRIVATE_KEY=
+CLIENT_PROXY_SERVER=${CLIENT_PROXY_SERVER}
 CSRF_SECRET_KEY=
 EXTERNAL_HOSTNAME=${PROXY_STATIC_IPv4}
 FRONTEND_CERT=
