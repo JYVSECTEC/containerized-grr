@@ -223,7 +223,7 @@ EOT
 
 # Check if the nginx configuration file syntax is correct
 
-docker pull --quiet nginx:latest
+docker pull nginx:latest
 docker run --rm \
             --interactive \
             --tty \
