@@ -25,6 +25,10 @@ set -e
 
 CHECK="\e[32m[+]\e[0m"
 
+# Sleep to avoid database connection errors
+
+sleep 20
+
 # Activate virtual environment so that the executables are usable from PATH
 
 echo -e "$CHECK Activate Python virtual environment"
