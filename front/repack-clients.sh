@@ -44,11 +44,20 @@ grr_config_updater set_var Frontend.certificate "$(cat $FRONTEND_CERT_PATH)" -p 
 grr_config_updater set_var PrivateKeys.server_key "$(cat $FRONTEND_PRIVATE_KEY_PATH)" -p "Config.writeback=/etc/grr/server.local.yaml"
 grr_config_updater set_var CA.certificate "$(cat $CA_CERT_PATH)" -p "Config.writeback=/etc/grr/server.local.yaml"
 grr_config_updater set_var PrivateKeys.ca_key "$(cat $CA_PRIVATE_KEY_PATH)" -p "Config.writeback=/etc/grr/server.local.yaml"
+grr_config_updater set_var Target:Windows:Client.proxy_servers "$(cat $CLIENT_PROXY_SERVER)"
+grr_config_updater set_var Target:Linux:Client.proxy_servers "$(cat $CLIENT_PROXY_SERVER)"
+grr_config_updater set_var Target:Darwin:Client.proxy_servers "$(cat $CLIENT_PROXY_SERVER)"
+grr_config_updater set_var Target:Windows:Client.server_urls "$(cat http://${FRONTEND_BIND_ADDRESS}:${FRONTEND_BIND_PORT}/)"
+grr_config_updater set_var Target:Linux:Client.server_urls "$(cat http://${FRONTEND_BIND_ADDRESS}:${FRONTEND_BIND_PORT}/)"
+grr_config_updater set_var Target:Darwin:Client.server_urls "$(cat http://${FRONTEND_BIND_ADDRESS}:${FRONTEND_BIND_PORT}/)"
+grr_config_updater set_var Target:Windows:Client.foreman_check_frequency "$(cat $FOREMAN_CHECK_FREQUENCY)"
+grr_config_updater set_var Target:Linux:Client.foreman_check_frequency "$(cat $FOREMAN_CHECK_FREQUENCY)"
+grr_config_updater set_var Target:Darwin:Client.foreman_check_frequency "$(cat $FOREMAN_CHECK_FREQUENCY)"
+grr_config_updater set_var Target:Windows:Client.poll_max "$(cat $POLL_MAX)"
+grr_config_updater set_var Target:Linux:Client.poll_max "$(cat $POLL_MAX)"
+grr_config_updater set_var Target:Darwin:Client.poll_max "$(cat $POLL_MAX)"
 
 # Repack clients
 
 echo -e "$CHECK Repack clients"
-grr_config_updater repack_clients --secondary_configs server.local.yaml \
-    -p Target:Windows:Client.proxy_servers="$(cat $CLIENT_PROXY_SERVER)" \
-    -p Target:Linux:Client.proxy_servers="$(cat $CLIENT_PROXY_SERVER)" \
-    -p Target:Darwin:Client.proxy_servers="$(cat $CLIENT_PROXY_SERVER)"
+grr_config_updater repack_clients
