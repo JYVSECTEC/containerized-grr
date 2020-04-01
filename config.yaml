@@ -15,9 +15,6 @@ ClientBuilder Context:
     Config.includes:
         - '/etc/grr/server.local.yaml'
 
-Client.server_urls:
-    - 'http://%(FRONTEND_BIND_ADDRESS|env):%(FRONTEND_BIND_PORT|env)/'
-
 ## Database
 
 Mysql.host: '%(MYSQL_HOST|env)'
@@ -57,10 +54,6 @@ AdminUI Context:
 ## Client Context
 
 Client Context:
-    Client.foreman_check_frequency: '%(FOREMAN_CHECK_FREQUENCY|env)'
-    Client.poll_max: '%(POLL_MAX|env)'
-    Client.proxy_servers:
-        - '%(CLIENT_PROXY_SERVER|env)'
     Config.includes:
         - '/etc/grr/server.local.yaml'
 
