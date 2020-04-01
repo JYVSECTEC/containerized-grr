@@ -7,8 +7,16 @@ Server.initialized: true
 
 ## Include file with certificate and key definitions
 
-Config.includes:
-    - '/etc/grr/server.local.yaml'
+ConfigUpdater Context:
+    Config.includes:
+        - '/etc/grr/server.local.yaml'
+
+ClientBuilder Context:
+    Config.includes:
+        - '/etc/grr/server.local.yaml'
+
+Client.server_urls:
+    - 'http://%(FRONTEND_BIND_ADDRESS|env):%(FRONTEND_BIND_PORT|env)/'
 
 ## Database
 
@@ -43,6 +51,8 @@ AdminUI Context:
         - '%(REMOTE_TRUSTED_IPV6|env)'
     Monitoring.http_port: '%(MONITORING_HTTP_PORT|env)'
     Logging.path: /var/log/grr/admin
+    Config.includes:
+        - '/etc/grr/server.local.yaml'
 
 ## Client Context
 
@@ -51,18 +61,22 @@ Client Context:
     Client.poll_max: '%(POLL_MAX|env)'
     Client.proxy_servers:
         - '%(CLIENT_PROXY_SERVER|env)'
-    Client.server_urls:
-        - 'http://%(FRONTEND_BIND_ADDRESS|env):%(FRONTEND_BIND_PORT|env)/'
+    Config.includes:
+        - '/etc/grr/server.local.yaml'
 
 ## Frontend Context
 
 HTTPServer Context:
     Monitoring.http_port: '%(MONITORING_HTTP_PORT|env)'
     Logging.path: /var/log/grr/frontend
+    Config.includes:
+        - '/etc/grr/server.local.yaml'
 
 Worker Context:
     Monitoring.http_port: '%(MONITORING_HTTP_PORT|env)'
     Logging.path: /var/log/grr/worker
+    Config.includes:
+        - '/etc/grr/server.local.yaml'
 
 ## Target specific Contexts
 
