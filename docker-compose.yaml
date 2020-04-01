@@ -48,8 +48,9 @@ services:
       - type: bind
         source: ./installers
         target: /usr/share/grr-server/executables/installers
-    volumes:
-      - "./config.yaml:/usr/share/grr-server/install_data/etc/server.local.yaml"
+      - type: bind
+        source: ./config.yaml
+        target: /usr/share/grr-server/install_data/etc/server.local.yaml
 
   mysql:
     command: "--max_allowed_packet=1073741824 \
