@@ -31,10 +31,6 @@ echo "###     GRR FRONT COMPONENT CONTAINER IS ABOUT TO BE STARTED"
 echo "###"
 echo "###"
 
-# Wait database to be initialized
-
-sleep 10
-
 # Activate virtual environment so that the executables are usable from PATH
 
 echo -e "$CHECK Activate Python virtual environment"
