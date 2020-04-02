@@ -48,4 +48,8 @@ grr_config_updater set_var PrivateKeys.ca_key "$(cat $CA_PRIVATE_KEY_PATH)" -p "
 # Repack clients
 
 echo -e "$CHECK Repack clients"
-grr_config_updater repack_clients --disallow_missing_config_definitions
+grr_config_updater repack_clients --disallow_missing_config_definitions \
+                    --parameter Client.poll_max="$(echo $POLL_MAX)" \
+                    --parameter Client.proxy_servers="$(echo http://${CLIENT_PROXY_SERVER}:8080/)" \
+                    --parameter Client.server_urls="$(echo http://${CLIENT_PROXY_SERVER}:8080/)" \
+                    --parameter Client.foreman_check_frequency="$(echo $FOREMAN_CHECK_FREQUENCY)"
