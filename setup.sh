@@ -115,6 +115,7 @@ CA_PRIVATE_KEY=
 CLIENT_PROXY_SERVER=${CLIENT_PROXY_SERVER}
 CSRF_SECRET_KEY=
 EXTERNAL_HOSTNAME=${PROXY_STATIC_IPv4}
+FOREMAN_CHECK_FREQUENCY=30
 FRONTEND_CERT=
 FRONTEND_PRIVATE_KEY=
 FRONTEND_PRIVATE_SIGNING_KEY=
@@ -126,6 +127,7 @@ MYSQL_PORT=3306
 MYSQL_DATABASE=grr
 MYSQL_USERNAME=admin
 MYSQL_PASSWORD=grr
+POLL_MAX=5
 REMOTE_TRUSTED_IPV4=${PROXY_STATIC_IPv4}
 REMOTE_TRUSTED_IPV6=::ffff:${PROXY_STATIC_IPv4}
 EOT
@@ -252,23 +254,6 @@ scrape_configs:
     - targets: ['${WORKER_STATIC_IPv4}:5003']
 EOT
 
-# Client configuration
-
-cat <<EOT >>./config.yaml
-
-## Client Context
-
-Client Context:
-    Config.includes:
-        - '/etc/grr/server.local.yaml'
-    Client.proxy_servers:
-        - 'http://${CLIENT_PROXY_SERVER}:8080/'
-    Client.server_urls:
-        - 'http://${CLIENT_PROXY_SERVER}:8080/'
-    Client.foreman_check_frequency: 30
-    Client.poll_max: 5
-
-EOT
 # Inform user
 
 echo -e "$CHECK Setup script completed"
