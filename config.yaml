@@ -8,12 +8,12 @@ Server.initialized: true
 ## Include file with certificate and key definitions
 
 ConfigUpdater Context:
-    Config.includes:
-        - '/etc/grr/server.local.yaml'
+  Config.includes:
+    - '/etc/grr/server.local.yaml'
 
 ClientBuilder Context:
-    Config.includes:
-        - '/etc/grr/server.local.yaml'
+  Config.includes:
+    - '/etc/grr/server.local.yaml'
 
 ## Database
 
@@ -36,52 +36,56 @@ Installer.logfile: '%(Logging.path)/client_installer.txt'
 # Context specific configurations
 
 ## AdminUI Context
-
+  
 AdminUI Context:
-    AdminUI.csrf_secret_key: '%(CSRF_SECRET_KEY|env)'
-    AdminUI.url: 'http://%(EXTERNAL_HOSTNAME|env):%(ADMINUI_PORT|env)'
-    AdminUI.webauth_manager: '%(ADMINUI_WEBAUTH_MANAGER|env)'
-    AdminUI.heading: '%(ADMINUI_HEADING|env)'
-    AdminUI.remote_user_trusted_ips:
-        - '%(REMOTE_TRUSTED_IPV4|env)'
-        - '%(REMOTE_TRUSTED_IPV6|env)'
-    Monitoring.http_port: '%(MONITORING_HTTP_PORT|env)'
-    Logging.path: /var/log/grr/admin
-    Config.includes:
-        - '/etc/grr/server.local.yaml'
-
-## Frontend Context
-
+  AdminUI.csrf_secret_key: '%(CSRF_SECRET_KEY|env)'
+  AdminUI.url: 'http://%(EXTERNAL_HOSTNAME|env):%(ADMINUI_PORT|env)'
+  AdminUI.webauth_manager: '%(ADMINUI_WEBAUTH_MANAGER|env)'
+  AdminUI.heading: '%(ADMINUI_HEADING|env)'
+  AdminUI.remote_user_trusted_ips:
+    - '%(REMOTE_TRUSTED_IPV4|env)'
+    - '%(REMOTE_TRUSTED_IPV6|env)'
+  Monitoring.http_port: '%(MONITORING_HTTP_PORT|env)'
+  Logging.path: /var/log/grr/admin
+  Config.includes:
+    - '/etc/grr/server.local.yaml'
+  
+  ## Frontend Context
+  
 HTTPServer Context:
-    Monitoring.http_port: '%(MONITORING_HTTP_PORT|env)'
-    Logging.path: /var/log/grr/frontend
-    Config.includes:
-        - '/etc/grr/server.local.yaml'
-
-## Worker Context
-
+  Monitoring.http_port: '%(MONITORING_HTTP_PORT|env)'
+  Logging.path: /var/log/grr/frontend
+  Config.includes:
+    - '/etc/grr/server.local.yaml'
+  
+  ## Worker Context
+  
 Worker Context:
-    Monitoring.http_port: '%(MONITORING_HTTP_PORT|env)'
-    Logging.path: /var/log/grr/worker
-    Config.includes:
-        - '/etc/grr/server.local.yaml'
-
-## Target specific Contexts
-
+  Monitoring.http_port: '%(MONITORING_HTTP_PORT|env)'
+  Logging.path: /var/log/grr/worker
+  Config.includes:
+    - '/etc/grr/server.local.yaml'
+  
+  ## Target specific Contexts
+  
 Target:Darwin:
-    Osquery.path: '/usr/bin/darwin/osqueryi'
-    Config.includes:
-        - 'build.yaml'
-    Logging.path: /var/log/grr
-
+  Osquery.path: '/usr/bin/darwin/osqueryi'
+  Config.includes:
+    - 'build.yaml'
+  Logging.path: /var/log/grr
+  
 Target:Linux:
-    Osquery.path: 'C:\\Program Files\\osquery\\osqueryi.exe'
-    Config.includes:
-        - 'build.yaml'
-    Logging.path: /var/log/grr
-
+  Osquery.path: 'C:\\Program Files\\osquery\\osqueryi.exe'
+  Config.includes:
+    - 'build.yaml'
+  Logging.path: /var/log/grr
+  
 Target:Windows:
     Osquery.path: '/usr/bin/osqueryi'
     Config.includes:
         - 'build.yaml'
     Logging.path: 'C:\Windows\Temp\grr'
+
+Client Context:
+  Config.includes:
+    - '/etc/grr/server.local.yaml'
