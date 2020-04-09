@@ -214,6 +214,9 @@ server {
       proxy_redirect      http://${ADMIN_STATIC_IPv4}:8000 https://${PROXY_STATIC_IPv4};
      }
 }
+
+client_max_body_size 100M;
+
 EOT
 
 # Create basic admin/grr user for authentication
