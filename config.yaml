@@ -85,7 +85,3 @@ Target:Windows:
     Config.includes:
         - 'build.yaml'
     Logging.path: 'C:\Windows\Temp\grr'
-
-Client Context:
-  Config.includes:
-    - '/etc/grr/server.local.yaml'
