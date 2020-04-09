@@ -75,13 +75,13 @@ Target:Darwin:
   Logging.path: /var/log/grr
   
 Target:Linux:
-  Osquery.path: 'C:\\Program Files\\osquery\\osqueryi.exe'
+  Osquery.path: '/usr/bin/osqueryi'
   Config.includes:
     - 'build.yaml'
   Logging.path: /var/log/grr
   
 Target:Windows:
-    Osquery.path: '/usr/bin/osqueryi'
+    Osquery.path: 'C:\\Program Files\\osquery\\osqueryi.exe'
     Config.includes:
         - 'build.yaml'
     Logging.path: 'C:\Windows\Temp\grr'
