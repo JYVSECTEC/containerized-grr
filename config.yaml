@@ -50,7 +50,7 @@ AdminUI Context:
   Config.includes:
     - '/etc/grr/server.local.yaml'
   
-  ## Frontend Context
+## Frontend Context
   
 HTTPServer Context:
   Monitoring.http_port: '%(MONITORING_HTTP_PORT|env)'
@@ -58,7 +58,7 @@ HTTPServer Context:
   Config.includes:
     - '/etc/grr/server.local.yaml'
   
-  ## Worker Context
+## Worker Context
   
 Worker Context:
   Monitoring.http_port: '%(MONITORING_HTTP_PORT|env)'
@@ -66,7 +66,7 @@ Worker Context:
   Config.includes:
     - '/etc/grr/server.local.yaml'
   
-  ## Target specific Contexts
+## Target specific Contexts
   
 Target:Darwin:
   Osquery.path: '/usr/bin/darwin/osqueryi'
