@@ -16,7 +16,7 @@
 #  under the License
 
 # Pin to tested version number
-FROM grrdocker/grr:v3.3.0.8
+FROM grrdocker/grr:v3.4.0.1
 
 EXPOSE 5005
 
